@@ -54,6 +54,21 @@ exports.list = (req, res) => {
     })
 }
 
+exports.view = (req, res) => {
+    body = req.query;
+    num = req.params.num;
+    sql = "SELECT * FROM tbl_board WHERE board_code = ? AND num = ?";
+
+    conn.query(sql, [body.board_code, num], (err, view) => {
+        if (err) throw err;
+
+        res.send({
+            success: true,
+            view: view
+        })
+    });
+}
+
 exports.add = (req, res) => {
     body = req.body;
     sql = "INSERT INTO tbl_board (board_code, subject, cont, id) values (?, ?, ?, ?)";

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import List from '@/components/board/List'
 import Write from '@/components/board/Write'
+import View from '@/components/board/View'
 
 Vue.use(Router); //vue 라우터 사용
 
@@ -22,6 +23,11 @@ export default new Router({
             path: "/board/write",
             name: Write,
             component: Write
+        },
+        {
+            path: "/board/view",
+            name: View,
+            component: View
         }
     ]
 })

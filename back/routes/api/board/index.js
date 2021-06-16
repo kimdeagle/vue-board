@@ -2,6 +2,9 @@ const router = require('express').Router();
 const dao = require('./dao');
 
 router.get("/", dao.list);
+
+router.get('/:num', dao.view);
+
 router.post("/", dao.add);
 
 router.all('*', (req, res)=> {

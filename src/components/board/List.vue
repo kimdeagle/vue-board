@@ -22,7 +22,7 @@
 				</tr>
 				<tr v-for="(row, idx) in list" :key="idx">
 					<td>{{no-idx}}</td>
-					<td class="txt_left"><a href="javascript:;">{{row.subject}}</a></td>
+					<td class="txt_left"><a href="javascript:;" @click="fnView(`${row.num}`)">{{row.subject}}</a></td>
 					<td>{{row.id}}</td>
 					<td>{{row.regdate.substring(0,10)}}</td>
 				</tr>
@@ -119,6 +119,13 @@ export default {
 				this.page = n;
 				this.fnGetList();
 			}
+		}
+		, fnView(num) {
+			this.body.num = num;
+			this.$router.push({
+				path: './view',
+				query: this.body
+			})
 		}
 	}
 }
