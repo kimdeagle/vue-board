@@ -23,6 +23,7 @@
 
 		<div class="btnWrap">
 			<a href="javascript:;" @click="fnList" class="btn">목록</a>
+			<a href="javascript:;" @click="fnMod" class="btnAdd btn">수정</a>
 		</div>	
 	</div>
 </template>
@@ -31,19 +32,19 @@
 export default {
 	data() {
 		return {
-			body:this.$route.query
-			,subject:''
-			,cont:''
-			,view:''
-			,num:this.$route.query.num
+			body: this.$route.query,
+			subject: '',
+			cont: '',
+			view: '',
+			num: this.$route.query.num
 		}
-	}
-	,mounted() {
+	},
+	mounted() {
 		this.fnGetView();
-	}
-	,methods:{
+	},
+	methods:{
 		fnGetView() {
-			this.$axios.get('http://localhost:3000/api/board/'+this.body.num,{params:this.body})
+			this.$axios.get('http://localhost:3000/api/board/'+this.body.num, {params:this.body})
 			.then((res)=>{
 				this.view = res.data.view[0];
 				this.subject = this.view.subject;
@@ -52,10 +53,19 @@ export default {
 			.catch((err)=>{
 				console.log(err);
 			})
-		}
-		,fnList(){
+		},
+		fnList(){
 			delete this.body.num;
-			this.$router.push({path:'./list',query:this.body});
+			this.$router.push({
+				path: './list',
+				query: this.body
+			});
+		},
+		fnMod() {
+			this.$router.push({
+				path: './write',
+				query: this.body
+			});
 		}
 	}
 }

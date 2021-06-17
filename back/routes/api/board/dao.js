@@ -78,3 +78,13 @@ exports.add = (req, res) => {
             res.send({success: true});
         })
 }
+
+exports.mod = (req, res) => {
+    body = req.body;
+    sql = "UPDATE tbl_board SET subject = ?, cont = ?, editdate = now() WHERE num = ?";
+    conn.query(sql, [body.subject, body.cont, body.num], (err, result) => {
+        if (err) throw err;
+
+        res.send({success: true});
+    })
+}

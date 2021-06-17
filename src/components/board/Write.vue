@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>게시판 등록</h1>
+        <h1>게시판 {{ num ? "수정" : "등록" }}</h1>
         <div class="AddWrap">
             <form>
                 <table class="tblAdd">
@@ -22,7 +22,8 @@
 
         <div class="btnWrap">
             <a href="javascript:;" @click="fnList" class="btn">목록</a>
-            <a href="javascript:;" @click="fnAddProc" class="btnAdd btn">등록</a>
+            <a v-if="!num" href="javascript:;" @click="fnAddProc" class="btnAdd btn">등록</a>
+            <a v-else href="javascript:;" @click="fnModProc" class="btnAdd btn">수정</a>
         </div>
     </div>
 </template>
@@ -35,13 +36,38 @@ export default {
             subject: '',
             cont: '',
             id: 'admin',
-            form: ''
+            body: this.$route.query,
+            form: '',
+            num: this.$route.query.num
         }
+    },
+    mounted() {
+        if (this.num) {
+            this.fnGetView();
+        } 
     },
     methods: {
         fnList() {
+            delete this.body.num;
             this.$router.push({
                 path: './list',
+                query: this.body
+            });
+        },
+        fnGetView() {
+            this.$axios.get("http://localhost:3000/api/board/" + this.body.num, {params: this.body})
+            .then((res) => {
+                this.view = res.data.view[0];
+                this.subject = this.view.subject;
+                this.cont = this.view.cont;
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        },
+        fnView() {
+            this.$router.push({
+                path: './view',
                 query: this.body
             });
         },
@@ -71,6 +97,34 @@ export default {
                 .catch((err)=> {
                     console.log(err);
                 })
+        },
+        fnModProc() {
+            if (!this.subject) {
+                alert("제목을 입력하세요.");
+                this.$refs.subject.focus();
+                return;
+            }
+
+            this.form = {
+                board_code: this.board_code,
+                subject: this.subject,
+                cont: this.cont,
+                id: this.id,
+                num: this.num
+            }
+
+            this.$axios.put("http://localhost:3000/api/board", this.form)
+            .then((res) => {
+                if (res.data.success) {
+                    alert("수정되었습니다.");
+                    this.fnView();
+                } else {
+                    alert("실행중 실패...");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
         }
     }
 }

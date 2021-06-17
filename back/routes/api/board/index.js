@@ -7,6 +7,8 @@ router.get('/:num', dao.view);
 
 router.post("/", dao.add);
 
+router.put("/", dao.mod);
+
 router.all('*', (req, res)=> {
     res.status(404).send({
         success: false,
