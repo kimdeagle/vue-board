@@ -12,6 +12,4 @@
 8. 상세(view)
 9. 수정(mod)
 
-### [참고사이트](https://fyzh99.tistory.com/34?category=837734) (ctrl + mouse click = 새로운 탭에서 열립니다.)
-
-<a href="http://example.com/" target="_blank">example</a>
+### [참고사이트](https://fyzh99.tistory.com/34?category=837734) (※ Ctrl 누른채로 클릭하면 새로운 탭에서 열립니다.)
